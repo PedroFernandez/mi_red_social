@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace FrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,7 +9,8 @@ class UserController extends Controller
 {
     public function loginAction(Request $request)
     {
-        echo "Accion de login";
-        die;
+        return $this->render('FrontendBundle:User:login.html.twig', [
+            'title' => 'Login'
+        ]);
     }
 }
