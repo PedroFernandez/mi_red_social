@@ -1,0 +1,11 @@
+app_user:
+  resource: "@FrontendBundle/Resources/config/routing/user.yml"
+  prefix: /
+
+app_publication:
+  resource: "@FrontendBundle/Resources/config/routing/publication.yml"
+  prefix: /
+
+frontend_homepage:
+    path:     /
+    defaults: { _controller: FrontendBundle:Default:index }
