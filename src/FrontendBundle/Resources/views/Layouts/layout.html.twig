@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %} Mi Red Social {%  endblock %}
+        </title>
+            {% block stylesheets %}
+                <!-- Incluir estilos CSS -->
+            {%  endblock %}
+
+            {% block javascripts %}
+                <!-- Incluir código javascript -->
+            {%  endblock %}
+    </head>
+    <body>
+        <header>
+            <h1>Red Social</h1>
+        </header>
+        <section id ="content">
+            {% block content %}
+                Content Default
+            {%  endblock %}
+        </section>
+        <footer>
+            <hr/>
+            <p>Desarrollo de una red social con Symfony3 - Pedro Fernández - pedrosoftwareqa@gmail.com</p>
+        </footer>
+    </body>
+</html>
