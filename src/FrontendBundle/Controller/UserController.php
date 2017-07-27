@@ -7,14 +7,23 @@ use Doctrine\ORM\EntityManager;
 use FrontendBundle\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends Controller
 {
+    /** @var Session $session */
+    private $session;
+
     public function loginAction(Request $request)
     {
         return $this->render('FrontendBundle:User:login.html.twig', [
             'title' => 'TEST'
         ]);
+    }
+
+    public function __construct()
+    {
+        $this->session = new Session();
     }
 
     public function registerAction(Request $request) {
@@ -50,18 +59,21 @@ class UserController extends Controller
                     if ($flush === null) {
                         $status = 'Te has registrado correctamente!';
 
+                        $this->session->getFlashBag()->add("status", $status);
+
                         return $this->redirect('login');
                     } else {
                         $status = 'No te has registrado correctamente :(';
                     }
 
                 } else {
-                    $status = 'El usuario ya existe.';
+                    $status = 'Este usuario ya existe';
                 }
 
             } else {
-                $status = "No te has registrado correctamente.";
+                $status = "No te has registrado correctamente :(";
             }
+            $this->session->getFlashBag()->add("status", $status);
         }
 
         return $this->render('FrontendBundle:User:register.html.twig', [
