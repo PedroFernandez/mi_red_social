@@ -2,10 +2,12 @@
 
 namespace BackendBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * User
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -62,7 +64,7 @@ class User
     }
 
     public function getRoles() {
-        return $this->getRole();
+        return ['ROLE_ADMIN', 'ROLE_USER'];
     }
 
     public function eraseCredentials() {
