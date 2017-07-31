@@ -15,7 +15,7 @@ class UserController extends Controller
     /** @var Session $session */
     private $session;
 
-    public function loginAction(Request $request)
+    public function loginAction()
     {
         if (is_object($this->getUser())) {
             return $this->redirect('home');
@@ -47,28 +47,10 @@ class UserController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                /** @var EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-
-                $query = $em
-                    ->createQuery('SELECT u FROM BackendBundle:User u WHERE u.email = :email OR u.nick = :nick')
-                    ->setParameter('email', $form->get('email')->getData())
-                    ->setParameter('nick', $form->get('nick')->getData());
-
-                $user_isset = $query->getResult();
+                list($em, $user_isset) = $this->checkIfUserIsAlreadyRegistered($form);
 
                 if (count($user_isset) == 0) {
-                    $factory = $this->get('security.encoder_factory');
-                    $encoder = $factory->getEncoder($user);
-
-                    $password = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
-
-                    $user->setPassword($password);
-                    $user->setRole('ROLE_USER');
-                    $user->setImage(null);
-
-                    $em->persist($user);
-                    $flush = $em->flush();
+                    $flush = $this->registerNewUser($user, $form, $em);
 
                     if ($flush === null) {
                         $status = 'Te has registrado correctamente!';
@@ -108,5 +90,45 @@ class UserController extends Controller
         }
 
         return new Response($result);
+    }
+
+    /**
+     * @param $form
+     * @return array
+     */
+    protected function checkIfUserIsAlreadyRegistered($form): array
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em
+            ->createQuery('SELECT u FROM BackendBundle:User u WHERE u.email = :email OR u.nick = :nick')
+            ->setParameter('email', $form->get('email')->getData())
+            ->setParameter('nick', $form->get('nick')->getData());
+
+        $user_isset = $query->getResult();
+        return array($em, $user_isset);
+    }
+
+    /**
+     * @param $user
+     * @param $form
+     * @param $em
+     * @return mixed
+     */
+    protected function registerNewUser($user, $form, $em)
+    {
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($user);
+
+        $password = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
+
+        $user->setPassword($password);
+        $user->setRole('ROLE_USER');
+        $user->setImage(null);
+
+        $em->persist($user);
+        $flush = $em->flush();
+        return $flush;
     }
 }
