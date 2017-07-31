@@ -16,3 +16,7 @@ user_nick_test:
   path: /nick-test
   defaults: { _controller: FrontendBundle:User:nickTest }
   methods: [POST]
+
+edit_user:
+  path: /my-data
+  defaults: { _controller: FrontendBundle:User:editUser }

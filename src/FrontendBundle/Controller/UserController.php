@@ -92,6 +92,12 @@ class UserController extends Controller
         return new Response($result);
     }
 
+    public function editUserAction(Request $request) {
+
+
+        return $this->render('FrontendBundle:User:edit_user.html.twig');
+    }
+
     /**
      * @param $form
      * @return array
