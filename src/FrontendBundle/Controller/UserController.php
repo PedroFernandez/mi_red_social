@@ -4,6 +4,7 @@ namespace FrontendBundle\Controller;
 
 use BackendBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use FrontendBundle\Form\UserType;
 use FrontendBundle\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,8 @@ class UserController extends Controller
         $this->session = new Session();
     }
 
-    public function registerAction(Request $request) {
+    public function registerAction(Request $request)
+    {
         if (is_object($this->getUser())) {
             return $this->redirect('home');
         }
@@ -77,7 +79,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function nickTestAction(Request $request) {
+    public function nickTestAction(Request $request)
+    {
         $nick = $request->get("nick");
         $em = $this->getDoctrine()->getManager();
         $user_repo = $em->getRepository('BackendBundle:User');
@@ -92,10 +95,14 @@ class UserController extends Controller
         return new Response($result);
     }
 
-    public function editUserAction(Request $request) {
+    public function editUserAction(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
 
-
-        return $this->render('FrontendBundle:User:edit_user.html.twig');
+        return $this->render('FrontendBundle:User:edit_user.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -129,10 +136,12 @@ class UserController extends Controller
 
         $password = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
 
+        /** @var User $user */
         $user->setPassword($password);
         $user->setRole('ROLE_USER');
         $user->setImage(null);
 
+        /** @var EntityManager $em */
         $em->persist($user);
         $flush = $em->flush();
         return $flush;
