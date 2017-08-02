@@ -97,8 +97,54 @@ class UserController extends Controller
 
     public function editUserAction(Request $request)
     {
+        /** @var User $user */
         $user = $this->getUser();
+        $user_image = $user->getImage();
         $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                list($em, $user_isset) = $this->checkIfUserIsAlreadyRegistered($form);
+
+                if (($this->checkThatIsUserLoggedIn($user, $user_isset)) || count($user_isset) == 0) {
+                    $file = $form['image']->getData();
+                    if ($this->checkFileIsValid($file)) {
+                        $ext = $file->guessExtension();
+                        if ($this->checkFileExtensionIsValid($ext)) {
+                            $file_name = $user->getId().time().'.'.$ext;
+
+                            $file->move('uploads/users', $file_name);
+                            $user->setImage($file_name);
+                        }
+                    } else {
+                        $user->setImage($user_image);
+                    }
+
+                    /** @var EntityManager $em */
+                    $em->persist($user);
+                    $flush = $em->flush();
+
+                    if ($flush === null) {
+                        $status = 'Has modificado tus datos correctamente!';
+
+                        $this->session->getFlashBag()->add("status", $status);
+
+                        return $this->redirect('login');
+                    } else {
+                        $status = 'No has modificado tus datos';
+                    }
+
+                } else {
+                    $status = 'Este usuario ya existe';
+                }
+
+            } else {
+                $status = "No se han actualizado tus datos";
+            }
+            $this->session->getFlashBag()->add("status", $status);
+            return $this->redirect('my-data');
+        }
 
         return $this->render('FrontendBundle:User:edit_user.html.twig', [
             'form' => $form->createView()
@@ -145,5 +191,33 @@ class UserController extends Controller
         $em->persist($user);
         $flush = $em->flush();
         return $flush;
+    }
+
+    /**
+     * @param $user
+     * @param $user_isset
+     * @return bool
+     */
+    protected function checkThatIsUserLoggedIn($user, $user_isset): bool
+    {
+        return $user->getEmail() == $user_isset[0]->getEmail() && $user->getNick() == $user_isset[0]->getNick();
+    }
+
+    /**
+     * @param $file
+     * @return bool
+     */
+    protected function checkFileIsValid($file): bool
+    {
+        return !empty($file) && $file != null;
+    }
+
+    /**
+     * @param $ext
+     * @return bool
+     */
+    protected function checkFileExtensionIsValid($ext): bool
+    {
+        return $ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif';
     }
 }

@@ -49,7 +49,7 @@ class UserType extends AbstractType
             ])
             ->add('bio', TextareaType::class, [
                 'label' => 'Biografía',
-                'required' => 'required',
+                'required' => false,
                 'attr' => [
                     'class' => 'form-bio form-control'
                 ]
