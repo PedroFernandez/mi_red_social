@@ -5,7 +5,7 @@
 
     <div class="col-lg-8 box-form" >
         <div class="container">
-            <div class="col-lg-12 box-form" >
+            <div class="col-lg-12 box-default" >
                 <h1>Gente</h1>
                 <div class="count">
                     <span class="label label-primary" >
@@ -13,11 +13,29 @@
                     </span>
                 </div>
 
-                </hr>
+                &nbsp;
 
-                <div class="box-content box-users" >
+                <div class="box-content box-users">
                     {% for user in pagination %}
-                        {{ user.email }} </br>
+                        <div class="col-lg-12 user-item">
+                            <div class="avatar">
+                                {% if user.image == null %}
+                                    <img src="{{ asset('assets/images/default.png') }}">
+                                {% else %}
+                                    <img src="{{ asset('uploads/users/'~user.image) }}">
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="user-item-content">
+                            <p>{{ user.name }} {{ user.surname }} - {{ user.nick }}</p>
+                            {% if user.bio != null %}
+                                <p><strong>Bio:</strong>{{ user.bio }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="clear-fix"></div>
+                        </hr>
                     {% endfor %}
                 </div>
                 <div class="navigation" >

@@ -30,6 +30,21 @@ body {
     float: none;
 }
 
+/* GENTE */
+.user-item .avatar {
+    background: lightgrey;
+    border-radius: 550px;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    float: left;
+}
+
+.user-item .avatar img {
+    height: 100px;
+    text-align: center;
+}
+
 .box-form input {
     margin-bottom: 10px;
 }

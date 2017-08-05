@@ -130,21 +130,24 @@ class UserController extends Controller
                     if ($flush === null) {
                         $status = 'Has modificado tus datos correctamente!';
 
-                        $this->session->getFlashBag()->add("status", $status);
+                        $this->session->getFlashBag()->add("success", $status);
 
                         return $this->redirect('login');
                     } else {
                         $status = 'No has modificado tus datos';
+                        $this->session->getFlashBag()->add("error", $status);
                     }
 
                 } else {
                     $status = 'Este usuario ya existe';
+                    $this->session->getFlashBag()->add("error", $status);
                 }
 
             } else {
                 $status = "No se han actualizado tus datos";
+                $this->session->getFlashBag()->add("error", $status);
             }
-            $this->session->getFlashBag()->add("status", $status);
+            $this->session->getFlashBag()->add("success", $status);
             return $this->redirect('my-data');
         }
 
