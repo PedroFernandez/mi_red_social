@@ -57,21 +57,23 @@ class UserController extends Controller
                     if ($flush === null) {
                         $status = 'Te has registrado correctamente!';
 
-                        $this->session->getFlashBag()->add("status", $status);
+                        $this->session->getFlashBag()->add("success", $status);
 
                         return $this->redirect('login');
                     } else {
                         $status = 'No te has registrado correctamente :(';
+                        $this->session->getFlashBag()->add("error", $status);
                     }
 
                 } else {
                     $status = 'Este usuario ya existe';
+                    $this->session->getFlashBag()->add("error", $status);
                 }
 
             } else {
                 $status = "No te has registrado correctamente :(";
+                $this->session->getFlashBag()->add("error", $status);
             }
-            $this->session->getFlashBag()->add("status", $status);
         }
 
         return $this->render('FrontendBundle:User:register.html.twig', [
