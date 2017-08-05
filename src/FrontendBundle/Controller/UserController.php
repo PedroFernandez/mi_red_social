@@ -153,8 +153,19 @@ class UserController extends Controller
         ]);
     }
 
-    public function usersAction(Request $request) {
-        print_r('Funciona el usersAction');die;
+    public function usersAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $dql = 'SELECT u FROM BackendBundle:User u';
+
+        $query = $em->createQuery($dql);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, $request->query->getInt('page', 1), 5);
+
+        return $this->render('FrontendBundle:User:users.html.twig', [
+            'pagination' => $pagination
+        ]);
     }
 
     /**
