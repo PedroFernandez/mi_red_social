@@ -153,6 +153,10 @@ class UserController extends Controller
         ]);
     }
 
+    public function usersAction(Request $request) {
+        print_r('Funciona el usersAction');die;
+    }
+
     /**
      * @param $form
      * @return array

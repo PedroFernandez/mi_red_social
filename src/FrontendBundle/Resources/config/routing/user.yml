@@ -20,3 +20,7 @@ user_nick_test:
 edit_user:
   path: /my-data
   defaults: { _controller: FrontendBundle:User:editUser }
+
+user_list:
+  path: /people
+  defaults: { _controller: FrontendBundle:User:users }
