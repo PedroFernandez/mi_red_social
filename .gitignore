@@ -14,3 +14,12 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+web/uploads/
+
+.idea
+.DS_Store
+src/.DS_Store
+src/FrontendBundle/Resources/.DS_Store
+src/FrontendBundle/Resources/views/.DS_Store
+web/.DS_Store
+
