@@ -177,7 +177,7 @@ class UserController extends Controller
         $search = $request->query->get('search', null);
 
         if ($search == null) {
-            $this->redirect($this->generateUrl('home_publications'));
+            return $this->redirect($this->generateUrl('home_publications'));
         }
 
         $dql = 'SELECT u FROM BackendBundle:User u '
