@@ -24,3 +24,7 @@ edit_user:
 user_list:
   path: /people
   defaults: { _controller: FrontendBundle:User:users }
+
+user_search:
+  path: /search
+  defaults: { _controller: FrontendBundle:User:search }

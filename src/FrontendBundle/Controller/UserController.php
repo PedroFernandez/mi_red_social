@@ -171,6 +171,29 @@ class UserController extends Controller
         ]);
     }
 
+    public function searchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $search = $request->query->get('search', null);
+
+        if ($search == null) {
+            $this->redirect($this->generateUrl('home_publications'));
+        }
+
+        $dql = 'SELECT u FROM BackendBundle:User u '
+            . ' WHERE u.name LIKE :search OR u.surname LIKE :search '
+            . ' OR u.nick LIKE :search ORDER BY u.id ASC';
+        $query = $em->createQuery($dql)->setParameter('search', "%$search%");
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, $request->query->getInt('page', 1), 5);
+
+        return $this->render('FrontendBundle:User:users.html.twig', [
+            'pagination' => $pagination
+        ]);
+    }
+
     /**
      * @param $form
      * @return array
