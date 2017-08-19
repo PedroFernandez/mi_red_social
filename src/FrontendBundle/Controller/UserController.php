@@ -159,7 +159,7 @@ class UserController extends Controller
     public function usersAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $dql = 'SELECT u FROM BackendBundle:User u';
+        $dql = 'SELECT u FROM BackendBundle:User u ORDER BY u.id ASC';
 
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
