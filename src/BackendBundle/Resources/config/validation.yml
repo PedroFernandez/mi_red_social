@@ -9,3 +9,4 @@ BackendBundle\Entity\User:
     email:
       - Email:
           message: El email {{ value }} no es válido
+          checkMX: false

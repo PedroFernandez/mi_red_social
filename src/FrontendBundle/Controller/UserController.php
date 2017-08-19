@@ -220,7 +220,10 @@ class UserController extends Controller
      */
     protected function checkThatIsUserLoggedIn($user, $user_isset): bool
     {
-        return $user->getEmail() == $user_isset[0]->getEmail() && $user->getNick() == $user_isset[0]->getNick();
+        if (!empty($user_isset)) {
+            return $user->getEmail() == $user_isset[0]->getEmail() && $user->getNick() == $user_isset[0]->getNick();
+        }
+        return false;
     }
 
     /**
