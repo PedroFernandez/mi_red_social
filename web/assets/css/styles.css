@@ -45,6 +45,11 @@ body {
     text-align: center;
 }
 
+.user-item .user-item-content {
+    padding: 10px;
+    margin-left: 85px;
+}
+
 .box-form input {
     margin-bottom: 10px;
 }

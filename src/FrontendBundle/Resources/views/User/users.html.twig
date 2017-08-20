@@ -1,14 +1,19 @@
 {% extends "@Frontend/Layouts/layout.html.twig" %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/custom/users.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <html>
 
-    <div class="col-lg-8 box-form" >
+    <div class="col-lg-8 box-form">
         <div class="container">
-            <div class="col-lg-12 box-default" >
+            <div class="col-lg-12 box-default">
                 <h1>Gente</h1>
                 <div class="count">
-                    <span class="label label-primary" >
+                    <span class="label label-primary">
                         Total de personas {{ pagination.getTotalItemCount }}
                     </span>
                 </div>
@@ -25,26 +30,23 @@
                                     <img src="{{ asset('uploads/users/'~user.image) }}">
                                 {% endif %}
                             </div>
-                        </div>
 
-                        <div class="user-item-content">
-                            <p>{{ user.name }} {{ user.surname }} - {{ user.nick }}</p>
-                            {% if user.bio != null %}
-                                <p><strong>Bio: </strong>{{ user.bio }}</p>
-                            {% endif %}
+                            <div class="user-item-content">
+                                <p>{{ user.name }} {{ user.surname }} - {{ user.nick }}</p>
+                                {% if user.bio != null %}
+                                    <p><strong>Bio: </strong>{{ user.bio }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="clear-fix"></div>
+                            <hr/>
                         </div>
-
-                        <div class="clear-fix"></div>
-                        </hr>
                     {% endfor %}
-                </div>
-                <div class="navigation" >
-                    {{ knp_pagination_render(pagination) }}
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
     </html>
 {% endblock %}
