@@ -4,7 +4,7 @@ namespace FrontendBundle\Controller;
 
 use BackendBundle\Entity\Following;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -20,7 +20,7 @@ class FollowingController extends Controller
         $user = $this->getUser();
         $followed_id = $request->get('followed');
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $user_repo = $em->getRepository('BackendBundle:User');
         $followed = $user_repo->find($followed_id);
 
@@ -32,9 +32,10 @@ class FollowingController extends Controller
         $flush = $em->flush();
 
         if ($flush == null) {
-            $status = 'Se ha registrado correctamente!';
+            $status = 'Ahora estás siguiendo a este usuario!';
+            file_put_contents('/tmp/log1.txt', 'OK');
         } else {
-            $status = 'No se ha registrado correctamente';
+            $status = 'No se ha podido seguir a este usuario!';
         };
         
         return new Response($status);
