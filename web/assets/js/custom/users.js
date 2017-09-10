@@ -14,7 +14,7 @@ $(document).ready(function () {
     }));
 
     ias.extension(new IASSpinnerExtension({
-        src: URL+'/../assets/images/ajax-loader.gif'
+        src: URL + '/../assets/images/ajax-loader.gif'
     }));
 
     ias.extension(new IASNoneLeftExtension({
@@ -32,6 +32,9 @@ $(document).ready(function () {
 
 function followButtons() {
     $(".btn-follow").unbind("click").click(function () {
+        $(this).addClass("hidden");
+        $(this).parent().find(".btn-unfollow").removeClass("hidden");
+
         $.ajax({
             url: URL + '/follow',
             type: 'POST',
@@ -43,6 +46,9 @@ function followButtons() {
     });
 
     $(".btn-unfollow").unbind("click").click(function () {
+        $(this).addClass("hidden");
+        $(this).parent().find(".btn-follow").removeClass("hidden");
+
         $.ajax({
             url: URL + '/unfollow',
             type: 'POST',
