@@ -1,4 +1,4 @@
-home_following:
+following_follow:
   path: /follow
   defaults: { _controller: FrontendBundle:Following:following }
   methods: [POST]
