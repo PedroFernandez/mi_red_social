@@ -6,6 +6,10 @@ app_publication:
   resource: "@FrontendBundle/Resources/config/routing/publication.yml"
   prefix: /
 
+app_follows:
+  resource: "@FrontendBundle/Resources/config/routing/following.yml"
+  prefix: /
+
 frontend_homepage:
-    path:     /
-    defaults: { _controller: FrontendBundle:Default:index }
+  path:     /
+  defaults: { _controller: FrontendBundle:Default:index }
