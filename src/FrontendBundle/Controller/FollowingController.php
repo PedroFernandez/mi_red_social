@@ -15,7 +15,7 @@ class FollowingController extends Controller
         $this->session = new Session();
     }
 
-    public function followingAction(Request $request)
+    public function followAction(Request $request)
     {
         $user = $this->getUser();
         $followed_id = $request->get('followed');
