@@ -104,3 +104,8 @@ body {
 .nickname {
     opacity: 0.7;
 }
+
+#new-publication input,
+#new-publication textarea {
+    margin-bottom: 10px;
+}
