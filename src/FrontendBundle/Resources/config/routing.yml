@@ -12,4 +12,4 @@ app_follows:
 
 frontend_homepage:
   path:     /
-  defaults: { _controller: FrontendBundle:Default:index }
+  defaults: { _controller: FrontendBundle:Publication:index }
