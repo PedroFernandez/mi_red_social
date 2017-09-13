@@ -6,7 +6,15 @@
             <h1>TIMELINE</h1>
             <hr/>
             <div class="box-content">
-                PUBLICACIONES
+
+                {% for publication in pagination %}
+                    {{ publication.text }}
+                    <hr/>
+                {% endfor %}
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
 
