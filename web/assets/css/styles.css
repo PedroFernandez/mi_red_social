@@ -30,8 +30,9 @@ body {
     float: none;
 }
 
-/* GENTE */
-.user-item .avatar {
+/* GENTE Y TIMELINE */
+.user-item .avatar,
+.publication-item .avatar {
     background: lightgrey;
     border-radius: 550px;
     width: 75px;
@@ -40,12 +41,14 @@ body {
     float: left;
 }
 
-.user-item .avatar img {
+.user-item .avatar img,
+.publication-item .avatar img {
     height: 100px;
     text-align: center;
 }
 
-.user-item .user-item-content {
+.user-item .user-item-content,
+.publication-item .publication-item-content {
     padding: 10px;
     margin-left: 85px;
 }
@@ -108,4 +111,13 @@ body {
 #new-publication input,
 #new-publication textarea {
     margin-bottom: 10px;
+}
+
+.pub-name-link {
+    font-weight: bold;
+    color: black;
+}
+
+.pub-date {
+    color: grey;
 }
