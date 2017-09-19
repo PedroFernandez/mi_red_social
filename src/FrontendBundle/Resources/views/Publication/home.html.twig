@@ -26,7 +26,7 @@
                                 {{ publication.user.nick }}
                                 -
                                 <span class="pub-date">
-                                {{ publication.createdAt|date('d-m-y') }}
+                                {{ publication.createdAt|long_time }}
                                 </span>
                             </p>
                             {{ publication.text }}
