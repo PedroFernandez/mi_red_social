@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
 
     ias.extension(new IASTriggerExtension({
-        text: 'Ver más',
+        text: 'Ver más personas',
         offset: 3
     }));
 
