@@ -24,15 +24,16 @@ class PublicationType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('document', TextareaType::class, [
-                'label' => 'Documento',
+            ->add('image', FileType::class, [
+                'label' => 'Foto',
                 'required' => false,
+                'data_class' => null,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
-            ->add('image', FileType::class, [
-                'label' => false,
+            ->add('document', FileType::class, [
+                'label' => 'Documento',
                 'required' => false,
                 'data_class' => null,
                 'attr' => [

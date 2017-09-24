@@ -53,8 +53,8 @@ class PublicationController extends Controller
                 }
 
                 $document = $form['document']->getData();
-                if (!empty($file) && $document != null) {
-                    $extension = $file->guessExtension();
+                if (!empty($document) && $document != null) {
+                    $extension = $document->guessExtension();
 
                     if ($extension == 'pdf') {
                         $documentName = $user->getId().time().".".$extension;
