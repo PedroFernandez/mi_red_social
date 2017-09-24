@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use FrontendBundle\Form\PublicationType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class PublicationController extends Controller
@@ -127,5 +128,28 @@ class PublicationController extends Controller
         );
 
         return $pagination;
+    }
+
+    public function removePublicationAction(Request $request, $id = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $publications_repo = $em->getRepository('BackendBundle:Publication');
+        $publication = $publications_repo->find($id);
+        $user = $this->getUser();
+
+        if ($user->getId() == $publication->getUser()->getId()) {
+            $em->remove($publication);
+            $flush = $em->flush();
+        }
+
+        if ($flush == null) {
+            $status = 'La publicación se ha borrado correctamente!';
+            $this->session->getFlashBag()->add('success', $status);
+        } else {
+            $status = 'La publicación no se ha borrado correctamente :(';
+            $this->session->getFlashBag()->add('error', $status);
+        }
+
+        return new Response($status);
     }
 }
