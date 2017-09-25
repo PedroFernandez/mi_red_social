@@ -31,6 +31,8 @@ $(document).ready(function () {
 });
 
 function buttons() {
+    $('[data-toogle="tooltip"]').tooltip();
+
     $(".btn-img").unbind("click").click(function() {
         $(this).parent().find(".pub-image").fadeToggle();
     })
