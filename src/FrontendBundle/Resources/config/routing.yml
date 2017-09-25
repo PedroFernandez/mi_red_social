@@ -10,6 +10,10 @@ app_follows:
   resource: "@FrontendBundle/Resources/config/routing/following.yml"
   prefix: /
 
+app_like:
+  resource: "@FrontendBundle/Resources/config/routing/like.yml"
+  prefix: /
+
 frontend_homepage:
   path:     /
   defaults: { _controller: FrontendBundle:Default:index }

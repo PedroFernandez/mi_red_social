@@ -34,7 +34,9 @@
                                 {{ publication.createdAt|long_time }}
                                 </span>
                             </p>
-                            <p>{{ publication.text }}</p>
+                            <div class="publication-item-content-text">
+                                <p>{{ publication.text }}</p>
+                            </div>
 
                             {% if (publication.document is defined) and (publication.user.id == app.user.id ) %}
                                 <span data-id="{{ publication.id }}" class="btn-delete-pub glyphicon glyphicon-trash" aria-hidden="true"></span>
