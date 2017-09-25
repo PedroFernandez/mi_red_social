@@ -1,3 +1,7 @@
 like_publication:
   path: /like/{id}
   defaults: { _controller: FrontendBundle:Like:like, id:null }
+
+unlike_publication:
+  path: /unlike/{id}
+  defaults: { _controller: FrontendBundle:Like:unlike, id:null }
