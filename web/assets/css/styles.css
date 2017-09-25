@@ -53,6 +53,10 @@ body {
     margin-left: 85px;
 }
 
+.publication-item .publication-item-content-text {
+    padding: 10px;
+}
+
 .box-form input {
     margin-bottom: 10px;
 }
