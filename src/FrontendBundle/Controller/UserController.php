@@ -158,7 +158,7 @@ class UserController extends Controller
 
     public function usersAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $dql = 'SELECT u FROM BackendBundle:User u ORDER BY u.id ASC';
 
         $query = $em->createQuery($dql);
@@ -173,7 +173,7 @@ class UserController extends Controller
 
     public function searchAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $search = trim($request->query->get('search', null));
 
         if ($search == null) {
