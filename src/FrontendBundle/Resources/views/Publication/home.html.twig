@@ -39,12 +39,13 @@
                             </div>
 
                             {% if (publication.document is defined) and (publication.user.id == app.user.id ) %}
-                                <span data-id="{{ publication.id }}" class="btn-delete-pub glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                <span data-id="{{ publication.id }}" class="btn-delete-pub glyphicon glyphicon-trash"
+                                      aria-hidden="true"></span>
                             {% endif %}
 
                             {% if (publication.document is defined) and (publication.document != null) %}
                                 <a href="{{ asset('uploads/publications/documents/'~publication.document) }}"
-                                    class="btn-doc glyphicon glyphicon-save" aria-hidden="true" target="_blank">
+                                   class="btn-doc glyphicon glyphicon-save" aria-hidden="true" target="_blank">
                                 </a>
                             {% endif %}
 
@@ -53,21 +54,21 @@
                                 <div class="clearfix"></div>
 
                                 <div class="pub-image">
-                                    <img src="{{ asset('uploads/publications/images/'~publication.image) }}" />
+                                    <img src="{{ asset('uploads/publications/images/'~publication.image) }}"/>
                                 </div>
                             {% endif %}
 
                             <div class="pull-right like">
                                 <span data-id="{{ publication.id }}"
-                                    class="
+                                      class="
                                      {% if app.user|liked(publication) == true %}
                                         hidden
                                      {% endif %}
                                      btn-like glyphicon glyphicon-heart-empty"
-                                    aria-hidden="true"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Me gusta">
+                                      aria-hidden="true"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Me gusta">
                                 </span>
 
                                 <span data-id="{{ publication.id }}"
@@ -113,6 +114,51 @@
             </div>
 
             <div class="clearfix"></div>
+
+            <div class="following-data">
+                <a href="#">
+                <span class="label-stat">
+                    Siguiendo
+                </span>
+                    <span class="number-stat">
+                    0
+                </span>
+                </a>
+            </div>
+
+            <div class="following-data">
+                <a href="#">
+                <span class="label-stat">
+                    Seguidores
+                </span>
+                    <span class="number-stat">
+                    0
+                </span>
+                </a>
+            </div>
+
+            <div class="following-data">
+                <a href="#">
+                <span class="label-stat">
+                    Publicaciones
+                </span>
+                    <span class="number-stat">
+                    0
+                </span>
+                </a>
+            </div>
+
+            <div class="following-data">
+                <a href="#">
+                <span class="label-stat">
+                    Me gustas
+                </span>
+                    <span class="number-stat">
+                    0
+                </span>
+                </a>
+            </div>
+
         </div>
 
         <div id="new-publication" class="col-lg-4 box-form pull-left">
