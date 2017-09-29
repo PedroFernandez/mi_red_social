@@ -31,6 +31,11 @@ body {
 }
 
 /* GENTE Y TIMELINE */
+.user_link {
+    color: black;
+    font-weight: bold;
+}
+
 .user-item .avatar,
 .publication-item .avatar {
     background: lightgrey;
