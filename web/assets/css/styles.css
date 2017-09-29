@@ -51,6 +51,7 @@ body {
 .publication-item .publication-item-content {
     padding: 10px;
     margin-left: 85px;
+    word-wrap: break-word;
 }
 
 .publication-item .publication-item-content-text {
@@ -90,7 +91,7 @@ body {
 }
 
 #user-card .avatar img {
-    height: 100%;
+    height: 150%;
     text-align: center;
 }
 
@@ -196,9 +197,10 @@ body {
     margin: 20px auto;
 }
 
-.profile-box > .avatar .img {
+.profile-box .avatar .profile-box-image {
     height: 100%;
     text-align: center;
+    zoom: 35%;
 }
 
 .profile-box .name-surname {

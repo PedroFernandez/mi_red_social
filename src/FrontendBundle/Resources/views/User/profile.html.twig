@@ -9,11 +9,13 @@
     <div class="col-lg-10 box-form profile-box">
 
         <div class="avatar">
-            {% if user.image == null %}
-                <img src="{{ asset('assets/images/default.png') }}">
-            {% else %}
-                <img src="{{ asset('uploads/users/'~user.image) }}">
-            {% endif %}
+            <div class="profile-box-image">
+                {% if user.image == null %}
+                    <img src="{{ asset('assets/images/default.png') }}">
+                {% else %}
+                    <img src="{{ asset('uploads/users/'~user.image) }}">
+                {% endif %}
+            </div>
         </div>
 
         <div class="name-surname">
