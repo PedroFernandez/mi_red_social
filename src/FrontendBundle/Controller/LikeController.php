@@ -3,6 +3,7 @@
 namespace FrontendBundle\Controller;
 
 use BackendBundle\Entity\Like;
+use FrontendBundle\Services\NotificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,10 @@ class LikeController extends Controller
         $flush = $em->flush();
 
         if ($flush == null) {
+            /** @var NotificationService $notification */
+            $notification = $this->get('app.notification_service');
+            $notification->set($publication->getUser(), 'like', $user->getId(), $publication->getId());
+
             $status = 'Te gusta esta publicación :) ';
         } else {
             $status = 'Error al guardar el Me gusta :(';
