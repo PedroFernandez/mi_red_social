@@ -33,6 +33,14 @@ services:
         tags:
             - { name: twig.extension }
 
+    get_user.twig_extension:
+        class: FrontendBundle\Twig\GetUserExtension
+        public: false
+        arguments:
+            doctrine: "@doctrine"
+        tags:
+            - { name: twig.extension }
+
     app.notification_service:
         class: FrontendBundle\Services\NotificationService
         arguments: ["@doctrine.orm.entity_manager"]

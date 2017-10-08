@@ -11,12 +11,14 @@
                         <div class="alert alert-default">
                             <span class="glyphicon glyphicon-info-sign aria-hidden=true"></span>
 
+                            {% set notificationUser = notification.typeId|get_user %}
+
                             {% if notification.type == 'follow' %}
-                                X usuario te esta siguiendo
+                                {{ notificationUser.name }} {{ notificationUser.surname }} te esta siguiendo
                             {% endif %}
 
                             {% if notification.type == 'like' %}
-                                X te ha dado like a una de tus publicaciones
+                                {{ notificationUser.name }} {{ notificationUser.surname }} ha dado like a una de tus publicaciones
                             {% endif %}
                         </div>
                     </div>
