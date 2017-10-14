@@ -3,12 +3,14 @@
 namespace FrontendBundle\Services;
 
 use BackendBundle\Entity\Notification;
+use Doctrine\ORM\EntityManager;
 
 class NotificationService
 {
+    /** @var EntityManager  */
     private $manager;
 
-    public function __construct($manager)
+    public function __construct(EntityManager $manager)
     {
         $this->manager = $manager;
     }
@@ -35,5 +37,21 @@ class NotificationService
         }
 
         return $status;
+    }
+
+    public function read($user)
+    {
+        $notification_repo = $this->manager->getRepository('BackendBundle:Notification');
+        $notifications = $notification_repo->findBy(['user' => $user]);
+
+        foreach ($notifications as $notification) {
+            $notification->setReaded(1);
+
+            $em = $this->manager;
+            $em->persist($notification);
+        }
+        $em->flush();
+
+        return true;
     }
 }

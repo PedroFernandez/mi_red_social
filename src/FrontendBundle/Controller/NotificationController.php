@@ -2,6 +2,7 @@
 
 namespace FrontendBundle\Controller;
 
+use FrontendBundle\Services\NotificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,10 @@ class NotificationController extends Controller
             $query,
             $request->query->getInt('page', 1), 5
         );
+
+        /** @var NotificationService $notification */
+        $notification = $this->get('app.notification_service');
+        $notification->read($user);
 
         return $this->render('FrontendBundle:Notification:notification_page.html.twig', [
             'user' => $user,
