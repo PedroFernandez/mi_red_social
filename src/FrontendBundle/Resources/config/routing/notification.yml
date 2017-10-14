@@ -1,3 +1,7 @@
 notifications_page:
   path: /notifications
   defaults: { _controller: FrontendBundle:Notification:index }
+
+unread_notifications:
+  path: /notifications/get
+  defaults: { _controller: FrontendBundle:Notification:countNotifications }

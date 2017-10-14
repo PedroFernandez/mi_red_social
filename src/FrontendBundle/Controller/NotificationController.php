@@ -3,6 +3,7 @@
 namespace FrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class NotificationController extends Controller
@@ -26,5 +27,18 @@ class NotificationController extends Controller
             'user' => $user,
             'pagination' => $publications
         ]);
+    }
+
+    public function countNotificationsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $notification_repo = $em->getRepository('BackendBundle:Notification');
+
+        $notifications = $notification_repo->findBy([
+            'user' => $this->getUser(),
+            'readed' => 0
+        ]);
+
+        return new Response(count($notifications));
     }
 }
