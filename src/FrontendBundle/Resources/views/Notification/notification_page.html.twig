@@ -2,12 +2,11 @@
 
 {% block content %}
     <div class="container">
-        <div class="col-lg-12 box-default box-notifications">
+        <div class="col-lg-12 box-form box-notifications">
             <h1 class="box-header">Notificaciones</h1>
 
             <div class="box-content">
                 {% for notification in pagination %}
-                    <div class="col-lg-12 notification-item">
                         <div class="alert alert-default">
                             <span class="glyphicon glyphicon-info-sign aria-hidden=true"></span>
 
@@ -21,10 +20,9 @@
                                 {{ notificationUser.name }} {{ notificationUser.surname }} ha dado like a una de tus publicaciones
                             {% endif %}
                         </div>
-                    </div>
                 {% endfor %}
             </div>
-
         </div>
+        <div class="clear-fix"></div>
     </div>
 {% endblock %}
