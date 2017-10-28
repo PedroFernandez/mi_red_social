@@ -1,6 +1,7 @@
 BackendBundle\Entity\User:
     type: entity
     table: users
+    repositoryClass: BackendBundle\Repository\UserRepository
     indexes:
         index_users_id:
             columns:
