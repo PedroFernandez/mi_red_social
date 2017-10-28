@@ -2,6 +2,7 @@
 
 namespace FrontendBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +16,20 @@ class PrivateMessageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $options['empty_data'];
+
         $builder
+            ->add('receiver', EntityType::class, [
+                'class' => 'BackendBundle:User',
+                'query_builder' => function($entity_repo) use($user) {
+                    return $entity_repo->getFollowingUsers($user);
+                },
+                'choice_label' => function($user) {
+                    return $user->getName() . " " . $user->getSurname() . " - " . $user->getNick();
+                },
+                'label' => 'Para:',
+                'attr' => ['class' => 'form-control']
+            ])
             ->add('message', TextType::class, [
                 'label' => 'Mensage',
                 'required' => 'required',
