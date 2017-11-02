@@ -20,12 +20,72 @@ class PrivateMessageController extends Controller
 
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         $privateMessage = new PrivateMessage();
         $form = $this->createForm(PrivateMessageType::class, $privateMessage, [
             'empty_data' => $user
         ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $file = $form['image']->getData();
+                if (!empty($file) && $file != null) {
+                    $extension = $file->guessExtension();
+
+                    if ($extension == 'jpg' || $extension == 'jpeg' || $extension = 'png' || $extension || 'gif') {
+                        $fileName = $user->getId() . time() . "." . $extension;
+
+                        $file->move("uploads/messages/images", $fileName);
+
+                        $privateMessage->setImage($fileName);
+                    } else {
+                        $privateMessage->setImage(null);
+                    }
+                } else {
+                    $privateMessage->setImage(null);
+                }
+
+                $document = $form['file']->getData();
+                if (!empty($document) && $document != null) {
+                    $extension = $document->guessExtension();
+
+                    if ($extension == 'pdf') {
+                        $documentName = $user->getId() . time() . "." . $extension;
+                        $document->move("uploads/messages/files", $documentName);
+
+                        $privateMessage->setFile($documentName);
+                    } else {
+                        $privateMessage->setFile(null);
+                    }
+                } else {
+                    $privateMessage->setFile(null);
+                }
+            } else {
+                $status = 'El mensaje no se ha enviado correctamente';
+                $this->session->getFlashBag()->add("error", $status);
+            }
+
+            $privateMessage->setEmitter($user);
+            $privateMessage->setCreatedAt(new \DateTime('now'));
+            $privateMessage->setReaded(0);
+
+            $em->persist($privateMessage);
+            $flush = $em->flush();
+
+            if ($flush == null) {
+                $status = 'La publicación se ha creado correctamente!';
+                $this->session->getFlashBag()->add("success", $status);
+            } else {
+                $status = 'Error al añadir la publicación :(';
+                $this->session->getFlashBag()->add("error", $status);
+            }
+
+            return $this->redirectToRoute('private_message_index');
+        }
 
         return $this->render('FrontendBundle:PrivateMessage:index.html.twig', [
             'form' => $form->createView()

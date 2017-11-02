@@ -4,6 +4,8 @@ namespace FrontendBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,16 +39,16 @@ class PrivateMessageType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('image', TextType::class, [
+            ->add('image', FileType::class, [
                 'label' => 'Imagen',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
-            ->add('file', TextType::class, [
+            ->add('file', FileType::class, [
                 'label' => 'Archivo',
-                'required' => 'required',
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
