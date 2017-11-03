@@ -3,6 +3,7 @@
 namespace FrontendBundle\Controller;
 
 use BackendBundle\Entity\PrivateMessage;
+use Doctrine\ORM\EntityManager;
 use FrontendBundle\Form\PrivateMessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,5 +91,39 @@ class PrivateMessageController extends Controller
         return $this->render('FrontendBundle:PrivateMessage:index.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function sendedAction(Request $request)
+    {
+        $privateMessages = $this->getPrivateMessages($request, 'sended');
+
+        return $this->render('FrontendBundle:PrivateMessage:sended.html.twig', [
+            'pagination' => $privateMessages
+        ]);
+    }
+
+    private function getPrivateMessages($request, $type = null)
+    {
+        $userId = $this->getUser()->getId();
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if ($type == 'sended') {
+            $dql = "SELECT p FROM BackendBundle:PrivateMessage p WHERE p.emitter = $userId ORDER BY p.id DESC";
+        } else {
+            $dql = "SELECT p FROM BackendBundle:PrivateMessage p WHERE p.receiver = $userId ORDER BY p.id DESC";
+        }
+
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $pagination;
     }
 }
