@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="col-lg-12 box-form">
+        <div class="col-lg-5 box-form pull-left">
             <h1 class="box-header">
                 Mensajería Privada
             </h1>
@@ -14,19 +14,21 @@
 
                 </br>
                 <a class="btn btn-warning" href="{{ path('private_message_sended') }}">Ver los mensajes enviados</a>
+            </div>
+        </div>
 
-                <div class="box-content">
-                    <h4>Mensajes Recibidos</h4>
-                    <hr/>
-                    {% for message in pagination %}
-                        <div class="col-lg-12 publication-item">
-                            <div class="avatar">
-                                {% if message.emitter.image == null %}
-                                    <img src="{{ asset('assets/images/default.png') }}">
-                                {% else %}
-                                    <img src="{{ asset('uploads/users/'~message.emitter.image) }}">
-                                {% endif %}
-                            </div>
+        <div class="col-lg-7 box-form pull-right">
+            <h4>Mensajes Recibidos</h4>
+            <hr/>
+            {% for message in pagination %}
+                <div class="col-lg-12 publication-item">
+                    <div class="avatar">
+                        {% if message.emitter.image == null %}
+                            <img src="{{ asset('assets/images/default.png') }}">
+                        {% else %}
+                            <img src="{{ asset('uploads/users/'~message.emitter.image) }}">
+                        {% endif %}
+                    </div>
 
                             <div class="publication-item-content">
                                 <p>
@@ -65,16 +67,8 @@
                         {{ knp_pagination_render(pagination) }}
                     </div>
                 </div>
-
-
-
-
-
-
             </div>
             <div class="clear-fix"></div>
-
         </div>
     </div>
 {% endblock %}
-
