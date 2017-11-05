@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use FrontendBundle\Form\PrivateMessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class PrivateMessageController extends Controller
@@ -128,5 +129,19 @@ class PrivateMessageController extends Controller
         );
 
         return $pagination;
+    }
+
+    public function getMessagesNotReadAction()
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $privateMessageRepository = $em->getRepository('BackendBundle:PrivateMessage');
+        $messagesNotRead = $privateMessageRepository->findBy([
+            'receiver' => $user->getId(),
+            'readed' => 0
+        ]);
+
+        return new Response(count($messagesNotRead));
     }
 }
