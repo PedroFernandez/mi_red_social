@@ -3,6 +3,7 @@
 namespace FrontendBundle\Controller;
 
 use BackendBundle\Entity\PrivateMessage;
+use BackendBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use FrontendBundle\Form\PrivateMessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -90,6 +91,7 @@ class PrivateMessageController extends Controller
         }
 
         $privateMessages = $this->getPrivateMessages($request);
+        $this->setReaded($em, $user);
 
         return $this->render('FrontendBundle:PrivateMessage:index.html.twig', [
             'form' => $form->createView(),
@@ -110,7 +112,6 @@ class PrivateMessageController extends Controller
     {
         $userId = $this->getUser()->getId();
 
-        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         if ($type == 'sended') {
@@ -136,12 +137,39 @@ class PrivateMessageController extends Controller
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
+        $messagesNotRead = $this->getMessagesNotRead($em, $user);
+
+        return new Response(count($messagesNotRead));
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param User $user
+     * @return array|PrivateMessage[]
+     */
+    protected function getMessagesNotRead(EntityManager $em, User $user)
+    {
         $privateMessageRepository = $em->getRepository('BackendBundle:PrivateMessage');
         $messagesNotRead = $privateMessageRepository->findBy([
             'receiver' => $user->getId(),
             'readed' => 0
         ]);
+        return $messagesNotRead;
+    }
 
-        return new Response(count($messagesNotRead));
+    /**
+     * @param EntityManager $em
+     * @param User $user
+     */
+    private function setReaded(EntityManager $em, User $user)
+    {
+        $messagesNotRead = $this->getMessagesNotRead($em, $user);
+
+        /** @var PrivateMessage $message */
+        foreach ($messagesNotRead as $message) {
+            $message->setReaded(1);
+            $em->persist($message);
+        }
+        $em->flush();
     }
 }
